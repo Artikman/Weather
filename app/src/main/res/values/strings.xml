@@ -13,5 +13,15 @@
     <string name="text_humidity">Humidity</string>
     <string name="text_visibility">Visibility</string>
     <string name="text_sunset">Sunset</string>
+    <string name="temperature">°</string>
+    <string name="weather">WEATHER</string>
+    <string name="c">°C</string>
+    <string name="feels">FEELS</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="pecent">%</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="wind">WIND</string>
+    <string name="kmh">KmH</string>
+    <string name="feels_like">Feels Like</string>
 
 </resources>
