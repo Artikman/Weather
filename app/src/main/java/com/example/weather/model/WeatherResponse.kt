@@ -26,7 +26,7 @@ class WeatherResponse {
     @SerializedName("base")
     var base: String? = null
     @SerializedName("weather")
-    var weather: List<WeatherResponse>? = null
+    var weather: List<Weather>? = null
     @SerializedName("coord")
     var coord: Coord? = null
 
@@ -41,11 +41,13 @@ class WeatherResponse {
         var ıd = 0
         @SerializedName("type")
         var type = 0
+
     }
 
     class Clouds {
         @SerializedName("all")
         var all = 0
+
     }
 
     class Wind {
@@ -53,6 +55,7 @@ class WeatherResponse {
         var deg = 0
         @SerializedName("speed")
         var speed = 0.0
+
     }
 
     class Main {
@@ -68,6 +71,7 @@ class WeatherResponse {
         var feelsLike = 0.0
         @SerializedName("temp")
         var temp = 0.0
+
     }
 
     class Weather {
@@ -79,6 +83,7 @@ class WeatherResponse {
         var main: String? = null
         @SerializedName("id")
         var ıd = 0
+
     }
 
     class Coord {
@@ -86,5 +91,6 @@ class WeatherResponse {
         var lat = 0.0
         @SerializedName("lon")
         var lon = 0.0
+
     }
 }

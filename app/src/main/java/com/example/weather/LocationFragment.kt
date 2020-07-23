@@ -13,45 +13,40 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weather.adapter.CityDailyAdapter
-import com.example.weather.databinding.FragmentCityDailyBinding
+import com.example.weather.databinding.FragmentLocationBinding
 import com.example.weather.utils.Constant
-import com.example.weather.viewmodel.CityDailyViewModel
+import com.example.weather.utils.dateConverter
+import com.example.weather.utils.timeConverter
+import com.example.weather.viewmodel.LocationViewModel
 import im.delight.android.location.SimpleLocation
-import kotlinx.android.synthetic.main.fragment_city_daily.*
+import kotlinx.android.synthetic.main.fragment_location.*
 
-class CityDailyFragment : Fragment() {
+class LocationFragment : Fragment() {
 
     private val requestCode = 1
+
+    private lateinit var viewModel: LocationViewModel
+    private lateinit var dataBinding: FragmentLocationBinding
 
     private var location: SimpleLocation? = null
     private var latitude: String? = null
     private var longitude: String? = null
-
-    private lateinit var viewModel : CityDailyViewModel
-    private lateinit var dataBinding: FragmentCityDailyBinding
-
-    private var cityDailyAdapter = CityDailyAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         dataBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_city_daily, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_location, container, false)
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = cityDailyAdapter
-
-        viewModel = ViewModelProviders.of(this).get(CityDailyViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(LocationViewModel::class.java)
 
         location = SimpleLocation(context)
-
         if (!location!!.hasLocationEnabled()) {
             SimpleLocation.openSettings(context)
         } else {
@@ -74,13 +69,29 @@ class CityDailyFragment : Fragment() {
 
             }
         }
+        viewModel.getWeatherDataWithGPS(latitude, longitude, Constant.METRIC)
 
-        viewModel.getCityDailyWeatherFromGps(latitude!!,longitude!!, Constant.CNT,Constant.METRIC)
+        viewModel.locationData.observe(viewLifecycleOwner, Observer { locationGps ->
+            locationGps?.let {
+                lytLocation.visibility = View.VISIBLE
+                dataBinding.locationGPS = locationGps
+                dataBinding.tvTemperature.text = locationGps.main!!.temp.toInt().toString()
+                dataBinding.tvDate.text = dateConverter()
+                dataBinding.tvSunrise.text = timeConverter((locationGps.sys!!.sunrise).toLong())
+                dataBinding.tvSunset.text = timeConverter((locationGps.sys!!.sunset).toLong())
+                dataBinding.imgState.setImageResource(resources.getIdentifier("ic_"+locationGps.weather?.get(0)?.icon, "drawable", view.context.packageName))
 
-        viewModel.cityDailyData.observe(viewLifecycleOwner, Observer {cityDailyWeatherGps ->
-            cityDailyWeatherGps.let {
-                recyclerView.visibility = View.VISIBLE
-                cityDailyAdapter.updateCountryList(cityDailyWeatherGps)
+            }
+        })
+
+        viewModel.locationLoading.observe(viewLifecycleOwner, Observer { loading ->
+            loading?.let {
+                if (it){
+                    locationLoading.visibility = View.VISIBLE
+                    lytLocation.visibility = View.GONE
+                }else{
+                    locationLoading.visibility = View.GONE
+                }
             }
         })
     }
@@ -96,10 +107,10 @@ class CityDailyFragment : Fragment() {
                 Log.e("LAT", "" + latitude)
                 Log.e("LONG", "" + longitude)
 
-                viewModel.getCityDailyWeatherFromGps(latitude!!,longitude!!,Constant.CNT,Constant.METRIC)
+                viewModel.getWeatherDataWithGPS(latitude!!, longitude!!, Constant.METRIC)
 
             } else {
-                Toast.makeText(context, "City Daily Fragment", Toast.LENGTH_LONG)
+                Toast.makeText(context, "Location Fragment", Toast.LENGTH_LONG)
                     .show()
             }
         }

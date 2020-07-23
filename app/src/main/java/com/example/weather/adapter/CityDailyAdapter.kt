@@ -16,10 +16,7 @@ class CityDailyAdapter(private val cityDailyList: ArrayList<CityDailyResponse.Fo
     class CityDailyViewHolder(var view: ForecastWeatherDailyItemBinding) :
         RecyclerView.ViewHolder(view.root)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CityDailyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityDailyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = DataBindingUtil.inflate<ForecastWeatherDailyItemBinding>(
             inflater,
