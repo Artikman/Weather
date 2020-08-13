@@ -15,8 +15,6 @@ class Receiver : BroadcastReceiver() {
         val actionName = intent?.action
         if(actionName == "android.net.conn.CONNECTIVITY_CHANGE") {
             internetReceiver.postValue("INTERNET")
-        } else if(actionName == "android.location.PROVIDERS_CHANGED") {
-            internetReceiver.postValue("LOCATION")
         }
     }
 }
