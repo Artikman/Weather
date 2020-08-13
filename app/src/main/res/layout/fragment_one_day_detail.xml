@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         layoutBackgroundImage="@{detail.weather.get(0).icon}"
-        tools:context=".CityDailyDetailFragment">
+        tools:context=".ui.fragments.CityDailyDetailFragment">
 
         <View
             android:id="@+id/locationBacgroundView"

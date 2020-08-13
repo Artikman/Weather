@@ -23,5 +23,8 @@
     <string name="wind">WIND</string>
     <string name="kmh">KmH</string>
     <string name="feels_like">Feels Like</string>
+    <string name="gps_network_not_enabled">gps close</string>
+    <string name="open_location_settings">gps open</string>
+    <string name="close_location_settings">close</string>
 
 </resources>

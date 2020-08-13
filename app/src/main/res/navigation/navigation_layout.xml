@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.example.weather.LocationFragment"
+        android:name="com.example.weather.ui.fragments.LocationFragment"
         tools:layout="@layout/fragment_location"
         android:label="LocationFragment" />
     <fragment
         android:id="@+id/fiveDaysFragment"
-        android:name="com.example.weather.FiveDaysFragment"
+        android:name="com.example.weather.ui.fragments.FiveDaysFragment"
         tools:layout="@layout/fragment_five_days"
         android:label="FiveDaysFragment" >
     </fragment>
     <fragment
         android:id="@+id/oneDayDetailFragment"
-        android:name="com.example.weather.CityDailyDetailFragment"
+        android:name="com.example.weather.ui.fragments.CityDailyDetailFragment"
         android:label="OneDayDetailFragment" >
         <argument
             android:name="cityWeatherDetail"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/oneDayFragment"
-        android:name="com.example.weather.CityDailyFragment"
+        android:name="com.example.weather.ui.fragments.CityDailyFragment"
         tools:layout="@layout/fragment_city_daily"
         android:label="OneDayFragment" >
         <action
